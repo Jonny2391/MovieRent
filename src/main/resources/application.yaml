@@ -1,0 +1,64 @@
+#debug: true
+
+# default
+#server:
+#  port: 8080
+
+spring:
+  application:
+    name: addone
+
+  data:
+    jpa:
+      repository:
+        # DEFAULT Repo controllati all'avvio dell'applicazione
+        # DEFERRED Repo controllati all'avvio in maniera asincrona (in prod)
+        # LAZY Repo controllati solo quando richiamati
+        bootstrap-mode: DEFAULT
+
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver #com.mysql.cj.jdbc.Driver
+    # prime versione mysql8 richiedevano useSLL=false
+    url: jdbc:mariadb://localhost:3306/video_store_exam?createDatabaseIfNotExist=true&autoReconnect=true&useSLL=false
+    #mysql://localhost:3306/myblog?createDatabaseIfNotExist=true&autoReconnect=true&useSLL=false
+    username: root
+    password:
+
+  jpa:
+    show-sql: true
+    hibernate:
+      # create-drop -> crea all'avvio dell'app e lo distrugge alla chiusura
+      # update -> aggiunge solo attributi nuovi
+      # none -> default, non modifica lo schema (in prod)
+      # validate -> convalida lo schema rispetto alla mappatura delle entità (con i database in memory)
+      ddl-auto: update
+    generate-ddl: true
+    open-in-view: false
+    properties:
+      #      dialect: org.hibernate.dialect.MySQL8Dialect
+      #      show-sql: true
+      #hibernate.dialect:
+      hibernate:
+      #dialect: org.hibernate.dialect.MariaDB104Dialect #MySQL8Dialect
+  #        show-sql: true
+  #    dialect: org.hibernate.dialect.MySQLDialect
+  #      show-sql: true
+  sql:
+    init:
+      # never: non viene eseguito data.sql nella cartella resources
+      # always: eseguito sempre data.sql
+      node: never
+
+#logging:
+#  level:
+#    it:
+#      cgmconsulting:
+#        # Default info
+#        myblog: DEBUG
+#    #web: DEBUG
+#    org:
+#      cache: trace
+#      hibernate:
+#        orm:
+#          jdbc:
+#            bind: trace
